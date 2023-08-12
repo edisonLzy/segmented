@@ -143,6 +143,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
 
     // Note: We should not auto switch value when value not exist in options
     // which may break single source of truth.
+    console.log(segmentedOptions[0]?.value);
     const [rawValue, setRawValue] = useMergedState(segmentedOptions[0]?.value, {
       value,
       defaultValue,
@@ -205,8 +206,6 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
                 `${prefixCls}-item`,
                 {
                   [`${prefixCls}-item-selected`]:
-                    // 为什么是 !thumbShow ? 因为在动画过程中，不应该切换选中态
-                    // MotionThumb 移动完成之后将会消失在DOM中
                     segmentedOption.value === rawValue && !thumbShow,
                 },
               )}

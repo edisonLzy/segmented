@@ -27,7 +27,9 @@ const calcThumbStyle = (
 ): ThumbReact =>
   targetElement
     ? {
+        // targetElement 距离 container block 左边的距离
         left: targetElement.offsetLeft,
+        // targetElement 距离 container block 右边的距离
         right:
           (targetElement.parentElement!.clientWidth as number) -
           targetElement.clientWidth -
@@ -57,7 +59,7 @@ export default function MotionThumb(props: MotionThumbInterface) {
   // =========================== Effect ===========================
   const findValueElement = (val: SegmentedValue) => {
     const index = getValueIndex(val);
-
+    // 直接通过 querySelectorAll 获取 指定位置的item
     const ele = containerRef.current?.querySelectorAll<HTMLDivElement>(
       `.${prefixCls}-item`,
     )[index];
@@ -72,7 +74,7 @@ export default function MotionThumb(props: MotionThumbInterface) {
     if (prevValue !== value) {
       const prev = findValueElement(prevValue);
       const next = findValueElement(value);
-
+      // 计算 prev 和 next 的样式
       const calcPrevStyle = calcThumbStyle(prev);
       const calcNextStyle = calcThumbStyle(next);
 
@@ -81,6 +83,7 @@ export default function MotionThumb(props: MotionThumbInterface) {
       setNextStyle(calcNextStyle);
 
       if (prev && next) {
+        // 更新 thumbShow 避免在动画中切换状态
         onMotionStart();
       } else {
         onMotionEnd();

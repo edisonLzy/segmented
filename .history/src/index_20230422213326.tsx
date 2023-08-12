@@ -48,7 +48,6 @@ function getValidTitle(option: SegmentedLabeledOption) {
 
 function normalizeOptions(options: SegmentedOptions): SegmentedLabeledOption[] {
   return options.map((option) => {
-    // [{ label, value}]
     if (typeof option === 'object' && option !== null) {
       const validTitle = getValidTitle(option);
 
@@ -57,7 +56,7 @@ function normalizeOptions(options: SegmentedOptions): SegmentedLabeledOption[] {
         title: validTitle,
       };
     }
-    // [1,2,3]
+
     return {
       label: option?.toString(),
       title: option?.toString(),
@@ -205,8 +204,6 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
                 `${prefixCls}-item`,
                 {
                   [`${prefixCls}-item-selected`]:
-                    // 为什么是 !thumbShow ? 因为在动画过程中，不应该切换选中态
-                    // MotionThumb 移动完成之后将会消失在DOM中
                     segmentedOption.value === rawValue && !thumbShow,
                 },
               )}
