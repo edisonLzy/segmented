@@ -40,6 +40,7 @@ describe('rc-segmented', () => {
     jest.useRealTimers();
   });
 
+  // 基本渲染
   it('render empty segmented', () => {
     const { asFragment } = render(<Segmented options={[]} />);
     expect(asFragment().firstChild).toMatchSnapshot();
@@ -54,6 +55,7 @@ describe('rc-segmented', () => {
 
     expect(asFragment().firstChild).toMatchSnapshot();
 
+    // 验证默认选择了第一个
     expectMatchChecked(container, [true, false, false]);
   });
 
@@ -70,13 +72,14 @@ describe('rc-segmented', () => {
 
     expect(asFragment().firstChild).toMatchSnapshot();
     expectMatchChecked(container, [true, false, false]);
-
+    // 验证label是ReactNode
     expect(container.querySelector('#android')?.textContent).toContain(
       'Android',
     );
     expect(container.querySelector('h2')?.textContent).toContain('Web');
   });
 
+  // 默认值
   it('render segmented with defaultValue', () => {
     const { container } = render(
       <Segmented options={['iOS', 'Android', 'Web']} defaultValue="Web" />,
@@ -85,6 +88,7 @@ describe('rc-segmented', () => {
     expectMatchChecked(container, [false, false, true]);
   });
 
+  // 交互验证
   it('render segmented with options', () => {
     const handleValueChange = jest.fn();
     const { container, asFragment } = render(
@@ -137,6 +141,7 @@ describe('rc-segmented', () => {
     expectMatchChecked(container, [false, true, false]);
   });
 
+  // 交互验证: item disabled & segmented disabled
   it('render segmented with options: disabled', () => {
     const handleValueChange = jest.fn();
     const { container, asFragment } = render(
@@ -203,6 +208,7 @@ describe('rc-segmented', () => {
     expectMatchChecked(container, [true, false, false]);
   });
 
+  // 验证可以传递 任意的html属性
   it('render segmented with className and other html attributes', () => {
     const { container } = render(
       <Segmented
@@ -217,6 +223,7 @@ describe('rc-segmented', () => {
     expect(container.firstChild).toHaveAttribute('data-test-id', 'hello');
   });
 
+  // 验证 ref 是否转发
   it('render segmented with ref', () => {
     const ref = React.createRef<HTMLDivElement>();
     const { container } = render(
@@ -230,6 +237,7 @@ describe('rc-segmented', () => {
     expect(ref.current).toBe(container.querySelector('.rc-segmented'));
   });
 
+  // 验证受控
   it('render segmented with controlled mode', () => {
     const offsetParentSpy = jest
       .spyOn(HTMLElement.prototype, 'offsetParent', 'get')
@@ -257,6 +265,7 @@ describe('rc-segmented', () => {
     };
     const { container } = render(<Demo />);
 
+    // 验证点击item 受控的value是否正确
     fireEvent.click(container.querySelectorAll('.rc-segmented-item-input')[0]);
     expect(container.querySelector('.value')?.textContent).toBe('iOS');
 
@@ -289,12 +298,14 @@ describe('rc-segmented', () => {
       target: { value: 'Web4' },
     });
 
-    // invalid changes: Should not active any item to make sure it's single source of truth
+    //! invalid changes: Should not active any item to make sure it's single source of truth
     expect(container.querySelector('.rc-segmented-item-selected')).toBeFalsy();
 
+    // rest spy
     offsetParentSpy.mockRestore();
   });
 
+  // test thumb
   describe('render segmented with CSSMotion', () => {
     it('basic', () => {
       const offsetParentSpy = jest
@@ -333,7 +344,7 @@ describe('rc-segmented', () => {
         '--thumb-start-width': '62px',
       });
 
-      // Motion => active
+      //! Motion => active
       act(() => {
         jest.runAllTimers();
       });
@@ -452,6 +463,7 @@ describe('rc-segmented', () => {
     });
   });
 
+  // 感觉不用测试这种情况
   it('render segmented with options null/undefined', () => {
     const handleValueChange = jest.fn();
     const { asFragment, container } = render(
@@ -505,6 +517,7 @@ describe('rc-segmented', () => {
         container.querySelectorAll<HTMLLabelElement>(
           '.rc-segmented-item-label',
         ),
+        // HTMLElement.title
       ).map((n) => n.title),
     ).toEqual(['Web', 'hello1', '', 'hello1.5', '']);
   });
@@ -524,6 +537,7 @@ describe('rc-segmented', () => {
     expectMatchChecked(container, [true, false, false]);
   });
 
+  // 需要考虑 direction 吗
   it('click can work as expected with rtl', () => {
     const offsetParentSpy = jest
       .spyOn(HTMLElement.prototype, 'offsetParent', 'get')

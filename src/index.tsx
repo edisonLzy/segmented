@@ -152,6 +152,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
     const [rawValue, setRawValue] = useMergedState(segmentedOptions[0]?.value, {
       value,
       defaultValue,
+      onChange,
     });
 
     // ======================= Change ========================
@@ -167,7 +168,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
 
       setRawValue(val);
 
-      onChange?.(val);
+      // onChange?.(val);
     };
 
     const divProps = omit(restProps, ['children']);

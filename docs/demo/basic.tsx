@@ -1,17 +1,14 @@
-import '../../assets/style.less';
 import React from 'react';
-import { Segmented } from '../../src/tiny';
+import '../../assets/style.less';
+import Segmented from '../../src/index';
 
 export default function App() {
   return (
     <div>
       <div className="wrapper">
         <Segmented
+          defaultValue="Android"
           options={[
-            {
-              label: 'IOS',
-              value: 'IOS',
-            },
             {
               label: 'Android',
               value: 'Android',
